@@ -1,0 +1,146 @@
+:root {
+    --bg: #f7f7f7;
+    --card: #ffffff;
+    --text: #222;
+    --muted: #666;
+    --primary: #2c7be5;
+    --danger: #e5533d;
+    --border: #ddd;
+}
+
+* {
+    box-sizing: border-box;
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+h1 {
+    margin-bottom: 8px;
+}
+
+p {
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+.card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+.form-row {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+}
+
+button {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #eee;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.actions button {
+    margin-right: 6px;
+}
+
+
+@media (max-width: 600px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        background: var(--card);
+        margin-bottom: 12px;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+    }
+
+    td {
+        border: none;
+        padding: 6px 0;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: block;
+        color: var(--muted);
+    }
+}
