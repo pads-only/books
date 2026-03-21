@@ -6,7 +6,7 @@
     <!-- Register Form -->
     <div class="card">
         <h2>Register</h2>
-        <form action="register.php" method="POST">
+        <form action="actions/users/register.php" method="POST">
             <div class="form-row">
                 <input type="text" name="first_name" placeholder="First Name" required>
                 <input type="text" name="last_name" placeholder="Last Name" required>

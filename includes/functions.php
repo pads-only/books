@@ -15,6 +15,13 @@ function getBooksById($dbh, $id)
     $book = $stmt->fetch();
     return $book;
 }
+function getUserByEmail($dbh, $email)
+{
+    $stmt = $dbh->prepare("SELECT * FROM users WHERE email=?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+    return $user;
+}
 
 function redirect()
 {

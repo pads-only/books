@@ -5,7 +5,6 @@ require "../includes/functions.php";
 
 $id = $_REQUEST['id'];
 
-
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $title = trim($_POST['title'] ?? '');
     $author = trim($_POST['author'] ?? '');
