@@ -1,14 +1,14 @@
 <?php
 session_start();
-include "database.php";
+include "config/database.php";
 
 $id = $_REQUEST['id'];
 
-$sql = 'DELETE FROM books WHERE id=?';
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, 'i', $id);
-
-if (mysqli_stmt_execute($stmt)) {
-    $_SESSION['message'] = "Book has been deleted";
+try {
+    $stmt = $dbh->prepare("DELETE FROM books WHERE id=?");
+    $stmt->execute([$id]);
     header("location: index.php");
+    exit;
+} catch (PDOException $e) {
+    die("Database Error: " . $e->getMessage());
 }

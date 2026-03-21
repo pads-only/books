@@ -38,6 +38,11 @@ p {
     margin-bottom: 24px;
 }
 
+#link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .card {
     background: var(--card);
     padding: 20px;

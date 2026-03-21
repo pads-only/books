@@ -1,15 +1,9 @@
 <?php
 session_start();
-include "database.php";
+include "config/database.php";
+require "includes/functions.php";
 
-
-$sql = "SELECT * FROM books ORDER BY id DESC";
-$stmt = mysqli_query($conn, $sql);
-
-$books = [];
-while ($rows = mysqli_fetch_assoc($stmt)) {
-    $books[] = $rows;
-}
+$books = getAllBooks($dbh);
 
 ?>
 <!doctype html>
@@ -76,13 +70,13 @@ while ($rows = mysqli_fetch_assoc($stmt)) {
                     foreach ($books as $book) {
                     ?>
                         <tr>
-                            <td data-label="Title"><?= $book['title'] ?></td>
-                            <td data-label="Author"><?= $book['author'] ?></td>
-                            <td data-label="Genre"><?= $book['genre'] ?></td>
-                            <td data-label="Year"><?= $book['year'] ?></td>
+                            <td data-label="Title"><?= $book['title'] ?? '' ?></td>
+                            <td data-label="Author"><?= $book['author'] ?? '' ?></td>
+                            <td data-label="Genre"><?= $book['genre'] ?? '' ?></td>
+                            <td data-label="Year"><?= $book['year'] ?? '' ?></td>
                             <td data-label="Actions">
-                                <button onclick=""><a href="edit.php?id=<?= $book['id'] ?>">Edit</a></button>
-                                <button><a href="delete.php?id=<?= $book['id'] ?>">Delete</a></button>
+                                <a href="edit.php?id=<?= $book['id'] ?>"><button>Edit</button></a>
+                                <a id="link" href="delete.php?id=<?= $book['id'] ?>"><button>Delete</button></a>
                             </td>
                         </tr>
                     <?php }

@@ -1,25 +1,50 @@
 <?php
 session_start();
-include "database.php";
+require "config/database.php";
 
-$method = $_SERVER['REQUEST_METHOD'];
 $id = $_REQUEST['id'];
 
-if ($method === "POST") {
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $genre = $_POST['genre'];
-    $year = $_POST['year'];
 
-    //validate inputs
-    if (empty($title) || empty($author) || empty($genre)) {
-        echo "All fields are required";
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    $title = trim($_POST['title'] ?? '');
+    $author = trim($_POST['author'] ?? '');
+    $genre = trim($_POST['genre'] ?? '');
+    $year = trim($_POST['year'] ?? '');
+
+    /**
+     * check of empty input
+     */
+    if (empty($title) || empty($author)) {
+        echo "Title and author is required";
+        exit;
     }
 
-    #slq 
-    $sql = "UPDATE books SET title='$title', author='$author', genre='$year', year='$year' WHERE id='$id'";
-    $stmt = mysqli_query($conn, $sql);
+    if (strlen($title) > 60) {
+        echo "The title is too long. It should not exceed 60 characters";
+        exit;
+    }
+    if (strlen($title) < 3) {
+        echo "The title is too short. It should not be less than 3 characters";
+        exit;
+    }
+    if (strlen($author) > 40) {
+        echo "The author is too long. It should not exceed 40 characters";
+        exit;
+    }
+    if (strlen($author) < 3) {
+        echo "The author is too short. It should not be less than 3 characters";
+        exit;
+    }
+    try {
+        //code...
+        $stmt = $dbh->prepare("UPDATE books SET title=?, author=?, genre=?, year=? WHERE id=?");
+        $stmt->execute([$title, $author, $genre, $year, $id]);
 
-    $_SESSION['message'] = "Book update succesfully";
-    header("location: index.php");
+        header("location: index.php");
+        exit;
+    } catch (PDOException $e) {
+        die("Database Error: " . $e->getMessage());
+    }
+
+    echo "Book update succesfully";
 }

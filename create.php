@@ -1,34 +1,69 @@
 <?php
 session_start();
-include 'database.php';
+require 'config/database.php';
+require 'includes/functions.php';
 
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    /**
+     * used trim() function to remove white spaces or tabs 
+     * and then use the null coalescing operator ?? 
+     * to ensure that it will default to empty string
+     * */
 
-$method = $_SERVER['REQUEST_METHOD'];
+    $title = trim($_POST['title'] ?? '');
+    $author = trim($_POST['author'] ?? '');
+    $genre = trim($_POST['genre'] ?? '');
+    $year = trim($_POST['year'] ?? '');
 
-if ($method === "POST") {
-
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $genre = $_POST['genre'];
-    $year = $_POST['year'];
-
-    //validate inputs
-    if (empty($title) || empty($author) || empty($genre)) {
-        echo "All fields are required";
+    /**
+     * check of empty input
+     */
+    if (empty($title) || empty($author)) {
+        echo "Title and author is required";
+        exit;
     }
 
-    //insert to database
-    $sql = "INSERT INTO books (title, author, genre, year) VALUES (?, ?, ?, ?)";
+    /**
+     * check for the length title and author
+     * title should not exceed 60 char and not less than 3 char
+     * and author should not exceed 40 and not less than 3 char
+     */
+    if (strlen($title) > 60) {
+        echo "The title is too long. It should not exceed 60 characters";
+        exit;
+    }
+    if (strlen($title) < 3) {
+        echo "The title is too short. It should not be less than 3 characters";
+        exit;
+    }
+    if (strlen($author) > 40) {
+        echo "The author is too long. It should not exceed 40 characters";
+        exit;
+    }
+    if (strlen($author) < 3) {
+        echo "The author is too short. It should not be less than 3 characters";
+        exit;
+    }
 
-    $stmt = mysqli_prepare($conn, $sql);
+    /**
+     * insert to the database using pdo
+     * The Pattern You Should Memorize
+     * This is your new mental model:
+     * $stmt = $dbh->prepare("SQL QUERY WITH ?");
+     * $stmt->execute([$value1, $value2]);
+     * $result = $stmt->fetch(); // or fetchAll()
+     */
+    try {
+        $stmt = $dbh->prepare("INSERT INTO books (title, author, genre, year) VALUES (?,?,?,?)");
+        $stmt->execute([$title, $author, $genre, $year]);
 
-    mysqli_stmt_bind_param($stmt, "sssi", $title, $author, $genre, $year);
-
-    if (mysqli_stmt_execute($stmt)) {
         header("location: index.php");
-        $_SESSION['message'] = "Book added successfully";
+        exit;
+    } catch (\Throwable $th) {
+        //throw $th;
+        die("Upload Error: " . $e->getMessage());
     }
-} else {
-    header("location: index.php");
-    exit;
 }
+
+header("location: index.php");
+exit;
