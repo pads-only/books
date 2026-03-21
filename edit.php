@@ -4,10 +4,6 @@ require "includes/functions.php";
 
 $id = $_REQUEST['id'];
 
-//select data from database using the id
-// $sql = "SELECT * FROM books WHERE id=$id";
-// $stmt = mysqli_query($conn, $sql);
-// $result = mysqli_fetch_assoc($stmt);
 $book = getBooksById($dbh, $id);
 ?>
 
