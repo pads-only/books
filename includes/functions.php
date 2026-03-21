@@ -15,3 +15,9 @@ function getBooksById($dbh, $id)
     $book = $stmt->fetch();
     return $book;
 }
+
+function redirect()
+{
+    header("location: ../index.php");
+    exit;
+}

@@ -1,14 +1,14 @@
 <?php
 session_start();
-include "config/database.php";
+require "../config/database.php";
+require "../includes/functions.php";
 
 $id = $_REQUEST['id'];
 
 try {
     $stmt = $dbh->prepare("DELETE FROM books WHERE id=?");
     $stmt->execute([$id]);
-    header("location: index.php");
-    exit;
+    redirect();
 } catch (PDOException $e) {
     die("Database Error: " . $e->getMessage());
 }

@@ -27,7 +27,7 @@ $book = getBooksById($dbh, $id);
 
         <!-- Book Form -->
         <div class="card">
-            <form id="bookForm" action="update.php?id=<?= $book['id'] ?>" method="post">
+            <form id="bookForm" action="actions/update.php?id=<?= $book['id'] ?>" method="post">
                 <input type="hidden" id="bookId" />
 
                 <div class="form-row">

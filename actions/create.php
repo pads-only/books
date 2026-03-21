@@ -1,7 +1,7 @@
 <?php
 session_start();
-require 'config/database.php';
-require 'includes/functions.php';
+require '../config/database.php';
+require '../includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     /**
@@ -57,13 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $stmt = $dbh->prepare("INSERT INTO books (title, author, genre, year) VALUES (?,?,?,?)");
         $stmt->execute([$title, $author, $genre, $year]);
 
-        header("location: index.php");
-        exit;
+        redirect();
     } catch (\Throwable $th) {
         //throw $th;
         die("Upload Error: " . $e->getMessage());
     }
 }
 
-header("location: index.php");
-exit;
+redirect();

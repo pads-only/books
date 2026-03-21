@@ -1,6 +1,7 @@
 <?php
 session_start();
-require "config/database.php";
+require "../config/database.php";
+require "../includes/functions.php";
 
 $id = $_REQUEST['id'];
 
@@ -40,11 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $stmt = $dbh->prepare("UPDATE books SET title=?, author=?, genre=?, year=? WHERE id=?");
         $stmt->execute([$title, $author, $genre, $year, $id]);
 
-        header("location: index.php");
-        exit;
+        redirect();
     } catch (PDOException $e) {
         die("Database Error: " . $e->getMessage());
     }
 
     echo "Book update succesfully";
 }
+
+redirect();

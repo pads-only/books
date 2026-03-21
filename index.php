@@ -23,7 +23,7 @@ $books = getAllBooks($dbh);
 
         <!-- Book Form -->
         <div class="card">
-            <form id="bookForm" action="create.php" method="post">
+            <form id="bookForm" action="actions/create.php" method="post">
                 <input type="hidden" id="bookId" />
 
                 <div class="form-row">
@@ -76,7 +76,7 @@ $books = getAllBooks($dbh);
                             <td data-label="Year"><?= $book['year'] ?? '' ?></td>
                             <td data-label="Actions">
                                 <a href="edit.php?id=<?= $book['id'] ?>"><button>Edit</button></a>
-                                <a id="link" href="delete.php?id=<?= $book['id'] ?>"><button>Delete</button></a>
+                                <a id="link" href="actions/delete.php?id=<?= $book['id'] ?>"><button>Delete</button></a>
                             </td>
                         </tr>
                     <?php }
