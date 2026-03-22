@@ -19,7 +19,7 @@ function getBooksById($dbh, $id, $user_id)
 
 function getBooksByUserId($dbh, $user_id)
 {
-    $stmt = $dbh->prepare("SELECT * FROM books WHERE user_id=?");
+    $stmt = $dbh->prepare("SELECT * FROM books WHERE user_id=? ORDER BY id DESC");
     $stmt->execute([$user_id]);
     $book = $stmt->fetchAll();
     return $book;

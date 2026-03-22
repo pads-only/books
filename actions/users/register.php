@@ -1,14 +1,15 @@
 <?php
 require "../../config/database.php";
 require "../../includes/functions.php";
+require "../../includes/helper_functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
-    $fname = trim($_POST['first_name'] ?? '');
-    $lname = trim($_POST['last_name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $password = trim($_POST['password'] ?? '');
-    $con_pass = trim($_POST['confirm_password'] ?? '');
+    $fname = trimmingInput('fname');
+    $lname = trimmingInput('lname');
+    $email = trimmingInput('email');
+    $password = trimmingInput('password');
+    $con_pass = trimmingInput('confirm_password');
 
     /**
      * check of empty input

@@ -2,15 +2,16 @@
 session_start();
 require "../config/database.php";
 require "../includes/functions.php";
+require "../includes/helper_functions.php";
 
 $id = $_REQUEST['id'];
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    $user_id = trim($_POST['user_id'] ?? '');
-    $title = trim($_POST['title'] ?? '');
-    $author = trim($_POST['author'] ?? '');
-    $genre = trim($_POST['genre'] ?? '');
-    $year = trim($_POST['year'] ?? '');
+    $user_id = trimmingInput('user_id');
+    $title = trimmingInput('title');
+    $author = trimmingInput('author');
+    $genre = trimmingInput('genre');
+    $year = trimmingInput('year');
 
     /**
      * check of empty input
