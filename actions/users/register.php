@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     /**
      * check of empty input
      */
-    if (empty($fname) || empty($lname) || empty($email) || empty($password) || empty($con_pass)) {
+    if (isEmpty([$fname, $lname, $email, $password, $con_pass])) {
         echo "All fields is required";
         exit;
     }

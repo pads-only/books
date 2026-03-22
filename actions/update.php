@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     /**
      * check of empty input
      */
-    if (empty($title) || empty($author)) {
-        echo "Title and author is required";
+    if (!isEmpty([$title, $author])) {
+        echo "Title and author is required!";
         exit;
     }
 
