@@ -10,8 +10,8 @@ function trimmingInput($name)
 //check for empty inputs
 function isEmpty($inputs)
 {
-    foreach ($inputs as $input) {
-        if (empty($input)) {
+    foreach ($inputs as $value) {
+        if ($value === '') {
             return false;
         }
     }

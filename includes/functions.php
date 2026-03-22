@@ -9,6 +9,19 @@ function getAllBooks($dbh)
     return $books;
 }
 
+// function filterBooks($books, $key, $value)
+// {
+//     $filteredBooks = [];
+
+//     foreach ($books as $book) {
+//         if ($book[$key] === $value) {
+//             $filteredBooks[] = $book;
+//         }
+//     }
+//     return $filteredBooks;
+// }
+// $extractedThing = filterBooks($things, 'author', 'author1');
+
 function getBooksById($dbh, $id, $user_id)
 {
     $stmt = $dbh->prepare("SELECT * FROM books WHERE id=? AND user_id=?");

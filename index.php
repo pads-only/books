@@ -2,8 +2,63 @@
 
 include "includes/auth/header.php";
 
-$books = getBooksByUserId($dbh, $_SESSION['user_id']);
+// $books = getBooksByUserId($dbh, $_SESSION['user_id']);
+$books = getAllBooks($dbh);
+
+
+// function filterBooks($books, $fn)
+// {
+//     $filteredBooks = [];
+
+//     foreach ($books as $book) {
+//         if ($fn($book)) {
+//             $filteredBooks[] = $book;
+//         }
+//     }
+//     return $filteredBooks;
+// }
+
+$extractedBooks = array_filter($books, function ($book) {
+    return $book['year'] === 2026;
+});
+
+// $things = [
+//     [
+//         'name' => 'name1',
+//         'author' => 'author1',
+//         'downloadUrl' => 'example.com'
+//     ],
+//     [
+//         'name' => 'name2',
+//         'author' => 'author1',
+//         'downloadUrl' => 'example.com'
+//     ],
+//     [
+//         'name' => 'name3',
+//         'author' => 'author3',
+//         'downloadUrl' => 'example.com'
+//     ]
+// ];
+
+// function filter($things, $key, $value)
+// {
+//     $filteredThings = [];
+//     foreach ($things as $thing) {
+//         if ($thing[$key] === $value) {
+//             $filteredThings[] = $thing;
+//         }
+//     }
+//     return $filteredThings;
+// }
+// $extractedThing = filter($things, 'author', 'author1');
+
 ?>
+
+<div>
+    <?php foreach ($extractedBooks as $item) : ?>
+        <li><?= $item['title'] ?></li>
+    <?php endforeach; ?>
+</div>
 <!-- Book Form -->
 <div class="card">
     <form id="bookForm" action="actions/create.php" method="post">
@@ -46,10 +101,7 @@ $books = getBooksByUserId($dbh, $_SESSION['user_id']);
             </tr>
         </thead>
         <tbody id="bookTable">
-            <?php
-            foreach ($books as $book) {
-                $date = date_create($book['created_at']);
-            ?>
+            <?php foreach ($books as $book) : $date = date_create($book['created_at']); ?>
                 <tr>
                     <td data-label="Title"><?= $book['title'] ?? '' ?></td>
                     <td data-label="Author"><?= $book['author'] ?? '' ?></td>
@@ -61,8 +113,7 @@ $books = getBooksByUserId($dbh, $_SESSION['user_id']);
                         <a id="link" href="actions/delete.php?id=<?= $book['id'] ?>"><button>Delete</button></a>
                     </td>
                 </tr>
-            <?php }
-            ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
