@@ -1,9 +1,11 @@
 <?php
 session_start();
+date_default_timezone_set('UTC');
+session_regenerate_id(true);
 require "config/database.php";
 require "includes/functions.php";
 
-if (!$_SESSION['user_id']) {
+if (!isset($_SESSION['user_id'])) {
     header("location: login.php");
     exit;
 }

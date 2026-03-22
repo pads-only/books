@@ -16,6 +16,14 @@ function getBooksById($dbh, $id)
     return $book;
 }
 
+function getBooksByUserId($dbh, $user_id)
+{
+    $stmt = $dbh->prepare("SELECT * FROM books WHERE user_id=?");
+    $stmt->execute([$user_id]);
+    $book = $stmt->fetchAll();
+    return $book;
+}
+
 function getUserByEmail($dbh, $email)
 {
     $stmt = $dbh->prepare("SELECT * FROM users WHERE email=?");

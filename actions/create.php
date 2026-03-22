@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
      * and then use the null coalescing operator ?? 
      * to ensure that it will default to empty string
      * */
-
+    $user_id = trim($_POST['user_id'] ?? '');
     $title = trim($_POST['title'] ?? '');
     $author = trim($_POST['author'] ?? '');
     $genre = trim($_POST['genre'] ?? '');
@@ -54,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
      * $result = $stmt->fetch(); // or fetchAll()
      */
     try {
-        $stmt = $dbh->prepare("INSERT INTO books (title, author, genre, year) VALUES (?,?,?,?)");
-        $stmt->execute([$title, $author, $genre, $year]);
+        $stmt = $dbh->prepare("INSERT INTO books (user_id, title, author, genre, year) VALUES (?,?,?,?,?)");
+        $stmt->execute([$user_id, $title, $author, $genre, $year]);
 
         redirect();
     } catch (\Throwable $th) {
@@ -64,4 +64,4 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     }
 }
 
-redirect();
+// redirect();
