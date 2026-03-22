@@ -15,10 +15,19 @@ function getBooksById($dbh, $id)
     $book = $stmt->fetch();
     return $book;
 }
+
 function getUserByEmail($dbh, $email)
 {
     $stmt = $dbh->prepare("SELECT * FROM users WHERE email=?");
     $stmt->execute([$email]);
+    $user = $stmt->fetch();
+    return $user;
+}
+
+function getUserById($dbh, $id)
+{
+    $stmt = $dbh->prepare("SELECT * FROM users WHERE user_id=?");
+    $stmt->execute([$id]);
     $user = $stmt->fetch();
     return $user;
 }

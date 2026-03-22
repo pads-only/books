@@ -7,13 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $fname = trim($_POST['first_name'] ?? '');
     $lname = trim($_POST['last_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    $passowrd = trim($_POST['password'] ?? '');
+    $password = trim($_POST['password'] ?? '');
     $con_pass = trim($_POST['confirm_password'] ?? '');
 
     /**
      * check of empty input
      */
-    if (empty($fname) || empty($lname) || empty($email) || empty($passowrd) || empty($con_pass)) {
+    if (empty($fname) || empty($lname) || empty($email) || empty($password) || empty($con_pass)) {
         echo "All fields is required";
         exit;
     }
@@ -37,10 +37,27 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         echo "The last name is too short. It should not be less than 3 characters";
         exit;
     }
-    if (strlen($passowrd) < 8) {
+    if (strlen($password) < 8) {
         echo "The password is too short. It should not be less than 8 characters";
         exit;
     }
+
+    /**
+     * check if the password matches
+     */
+    if ($password != $con_pass) {
+        echo "Password does not match";
+        exit;
+    }
+
+    /**
+     * hash password with password_hashed with Argon2id
+     * 👉 Why Argon2id?
+     * Winner of the Password Hashing Competition
+     * Resistant to GPU attacks
+     * Memory-hard (harder to brute-force)
+     */
+    $hash = password_hash($password, PASSWORD_ARGON2ID);
 
     /**
      * check if the email is a valid email
@@ -53,27 +70,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     /**
      * check if the user email already exist
      */
-    if (getUserByEmail($dbh, $email) > 0) {
+    if (getUserByEmail($dbh, $email)) {
         echo "Email already exist";
         exit;
     }
 
-    /**
-     * check if the password matches
-     */
-    if ($passowrd != $con_pass) {
-        echo "Password does not match";
-        exit;
-    }
-
-    /**
-     * hash password with password_hashed with Argon2id
-     * 👉 Why Argon2id?
-     * Winner of the Password Hashing Competition
-     * Resistant to GPU attacks
-     * Memory-hard (harder to brute-force)
-     */
-    $hash = password_hash($passowrd, PASSWORD_ARGON2ID);
 
     /**
      * insert to database 
