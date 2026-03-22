@@ -8,10 +8,11 @@ function getAllBooks($dbh)
     $books = $stmt->fetchAll();
     return $books;
 }
-function getBooksById($dbh, $id)
+
+function getBooksById($dbh, $id, $user_id)
 {
-    $stmt = $dbh->prepare("SELECT * FROM books WHERE id=?");
-    $stmt->execute([$id]);
+    $stmt = $dbh->prepare("SELECT * FROM books WHERE id=? AND user_id=?");
+    $stmt->execute([$id, $user_id]);
     $book = $stmt->fetch();
     return $book;
 }

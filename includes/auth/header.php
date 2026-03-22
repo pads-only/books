@@ -72,10 +72,11 @@ $user = getUserById($dbh, $_SESSION['user_id']);
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <div class="nav-left">Book Collection</div>
+        <div class="nav-left">📚Book Collection</div>
         <div class="nav-right">
             <a href="dashboard.php">Home</a>
             <a href="index.php">Upload Book</a>
             <a href="logout.php"><button class="btn-danger">Logout</button></a>
         </div>
     </div>
+    <div class="container">
