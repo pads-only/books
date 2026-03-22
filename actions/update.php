@@ -6,6 +6,7 @@ require "../includes/functions.php";
 $id = $_REQUEST['id'];
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    $user_id = trim($_POST['user_id'] ?? '');
     $title = trim($_POST['title'] ?? '');
     $author = trim($_POST['author'] ?? '');
     $genre = trim($_POST['genre'] ?? '');
@@ -37,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     }
     try {
         //code...
-        $stmt = $dbh->prepare("UPDATE books SET title=?, author=?, genre=?, year=? WHERE id=?");
-        $stmt->execute([$title, $author, $genre, $year, $id]);
+        $stmt = $dbh->prepare("UPDATE books SET title=?, author=?, genre=?, year=? WHERE id=? AND user_id=?");
+        $stmt->execute([$title, $author, $genre, $year, $id, $user_id]);
 
         redirect();
     } catch (PDOException $e) {

@@ -2,6 +2,7 @@
 session_start();
 require '../config/database.php';
 require '../includes/functions.php';
+require '../includes/helper.php';
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     /**
@@ -9,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
      * and then use the null coalescing operator ?? 
      * to ensure that it will default to empty string
      * */
-    $user_id = trim($_POST['user_id'] ?? '');
-    $title = trim($_POST['title'] ?? '');
-    $author = trim($_POST['author'] ?? '');
-    $genre = trim($_POST['genre'] ?? '');
-    $year = trim($_POST['year'] ?? '');
+    $user_id = sanitizeInput('user_id');
+    $title = sanitizeInput('title');
+    $author = sanitizeInput('author');
+    $genre = sanitizeInput('genre');
+    $year = sanitizeInput('year');
 
     /**
      * check of empty input
